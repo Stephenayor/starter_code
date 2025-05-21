@@ -148,4 +148,8 @@ dependencies {
 
     // For IntentIntegrator
     implementation (libs.androidx.fragment.ktx)
+
+    //Gson
+    implementation (libs.gson)
+
 }

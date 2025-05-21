@@ -53,9 +53,11 @@ import com.example.connect.utils.GoogleAuthUiClient
 import com.example.connect.utils.Route
 import com.example.connect.utils.Tools
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @Composable
@@ -68,6 +70,7 @@ fun SignUpScreen(
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+    var firebaseAuth = FirebaseAuth.getInstance()
 
     LaunchedEffect(Unit) {
     }
@@ -103,6 +106,9 @@ fun SignUpScreen(
 
             onNavigateToHome(navController)
             viewModel.resetState()
+        }
+        if (firebaseAuth.currentUser != null){
+            onNavigateToHome(navController)
         }
     }
 

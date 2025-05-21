@@ -9,4 +9,5 @@ interface QRScannerRepository {
 
     suspend fun createUser(userModel: UserModel): Flow<ApiResponse<Boolean>>
     suspend fun getUser(): Flow<ApiResponse<UserModel>>
+    fun getUserById(userId: String): Flow<ApiResponse<UserModel>>
 }

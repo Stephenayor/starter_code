@@ -27,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -40,10 +39,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.connect.data.UserModel
 import com.example.connect.utils.ApiResponse
+import com.example.connect.utils.Route
 import com.example.connect.utils.Tools
-import com.example.connect.utils.UserDetailsViewModel
 import com.example.connect.utils.dialogs.StatusDialog
-import com.google.firebase.firestore.auth.User
 
 @Composable
 fun UserDetailsScreen(modifier: Modifier = Modifier,
@@ -96,6 +94,16 @@ fun UserDetailsScreen(modifier: Modifier = Modifier,
 
             Spacer(modifier = Modifier.height(40.dp))
 
+            if (isLoading){
+                Box(
+                    Modifier.fillMaxSize()
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+
             // Name Field
             Text(
                 text = "Name",
@@ -124,16 +132,6 @@ fun UserDetailsScreen(modifier: Modifier = Modifier,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(90.dp))
-
-            if (isLoading){
-                Box(
-                    Modifier.fillMaxSize()
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ){
-                    CircularProgressIndicator()
-                }
-            }
 
             Button(
                 onClick = {
@@ -170,6 +168,8 @@ fun UserDetailsScreen(modifier: Modifier = Modifier,
 
                 is ApiResponse.Success -> {
                     isLoading = false
+                    name = TextFieldValue("")
+                    accountNumber = TextFieldValue("")
                     StatusDialog(
                         show        = showDialog,
                         isSuccess   = true,
@@ -180,8 +180,7 @@ fun UserDetailsScreen(modifier: Modifier = Modifier,
                         onConfirm   = {
                             showDialog = false
                             /* additional action */
-                            Tools.showToast(context, "Ready")
-
+                            navController.navigate(Route.QR_SCANNER)
                         }
                     )
 

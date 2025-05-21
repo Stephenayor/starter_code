@@ -70,4 +70,20 @@ class QRScannerRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getUserById(userId: String): Flow<ApiResponse<UserModel>> = flow {
+        emit(ApiResponse.Loading)
+        try {
+            val snap = firebaseFireStore
+                .collection(CONNECTUSERS)
+                .document(userId)
+                .get()
+                .await()
+            val user = snap.toObject(UserModel::class.java)
+            if (user != null) emit(ApiResponse.Success(user))
+            else emit(ApiResponse.Failure(Exception("User not found")))
+        } catch (e: Exception) {
+            emit(ApiResponse.Failure(e))
+        }
+    }
+
 }
