@@ -1,4 +1,4 @@
-package com.example.connect.data
+package com.example.connect.data.model
 
 data class UserData(
     val userId: String,

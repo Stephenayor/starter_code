@@ -2,17 +2,22 @@ package com.example.connect.presentation.qrscanner
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Share
@@ -34,19 +39,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.connect.data.UserModel
+import com.example.connect.data.model.UserModel
 import com.example.connect.utils.ApiResponse
 import com.example.connect.utils.Route
 import com.example.connect.utils.Tools
-import com.example.connect.utils.dialogs.StatusDialog
 
 @Composable
 fun QRScannerHome(
@@ -61,7 +65,7 @@ fun QRScannerHome(
 
 
     LaunchedEffect(Unit) {
-        navController.clearBackStack(true)
+//        navController.popBackStack()
         viewModel.getUserDetails()
 //        userModel?.let { viewModel.generateBarcode(it) }
     }
@@ -69,7 +73,7 @@ fun QRScannerHome(
     val bitmap by viewModel.barcodeBitmap.collectAsState()
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController) },
+        bottomBar = { BottomNavigationBarWithCenterChat(navController) },
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
@@ -158,6 +162,69 @@ fun QRScannerHome(
 
     }
 
+}
+
+
+@Composable
+fun BottomNavigationBarWithCenterChat(navController: NavController) {
+    var selectedItem by remember { mutableIntStateOf(0) }
+    val items = listOf("Home", "Chat", "Scan")
+
+    Box {
+        NavigationBar(
+            containerColor = Color.White,
+            tonalElevation = 4.dp,
+            modifier = Modifier
+                .height(72.dp)
+                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+        ) {
+            items.forEachIndexed { index, item ->
+                if (index == 1) {
+                    Spacer(modifier = Modifier.weight(1f))
+                } else {
+                    val actualIndex = if (index == 0) 0 else 2
+                    NavigationBarItem(
+                        selected = selectedItem == actualIndex,
+                        onClick = {
+                            selectedItem = actualIndex
+                            when (item) {
+                                "Home" -> navController.navigate(Route.QR_SCANNER)
+                                "Scan" -> navController.navigate(Route.SCAN_BARCODE)
+                            }
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = if (item == "Home") Icons.Default.QrCodeScanner else Icons.Default.List,
+                                contentDescription = item,
+                                tint = if (selectedItem == actualIndex) MaterialTheme.colorScheme.primary else Color.Gray
+                            )
+                        },
+                        label = {
+                            Text(
+                                text = item,
+                                color = if (selectedItem == actualIndex) MaterialTheme.colorScheme.primary else Color.Gray
+                            )
+                        }
+                    )
+                }
+            }
+        }
+
+        FloatingActionButton(
+            onClick = {
+                selectedItem = 1
+                navController.navigate(Route.CHATS_SCREEN)
+            },
+            shape = CircleShape,
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = Color.White,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .offset(y = (-24).dp)
+        ) {
+            Icon(imageVector = Icons.Default.Chat, contentDescription = "Chat")
+        }
+    }
 }
 
 

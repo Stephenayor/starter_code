@@ -1,7 +1,6 @@
 package com.example.connect.domain
 
-import android.net.Uri
-import com.example.connect.data.UserModel
+import com.example.connect.data.model.UserModel
 import com.example.connect.utils.ApiResponse
 import kotlinx.coroutines.flow.Flow
 

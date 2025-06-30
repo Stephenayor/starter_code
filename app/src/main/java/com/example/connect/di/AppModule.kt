@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.connect.data.repository.ChatRepositoryImpl
 import com.example.connect.data.repository.QRScannerRepositoryImpl
+import com.example.connect.domain.ChatRepository
 import com.example.connect.domain.QRScannerRepository
 import com.example.connect.utils.AppConstants
 import com.google.firebase.Firebase
@@ -19,6 +21,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 @Module
@@ -85,6 +88,18 @@ object AppModule {
         context: Context,
     ): QRScannerRepository{
         return QRScannerRepositoryImpl(firebaseStorage, firebaseFireStore, context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
+
+    @Provides
+    @Singleton
+    fun provideChatRepository(
+        okHttpClient: OkHttpClient
+    ): ChatRepository{
+        return ChatRepositoryImpl(okHttpClient)
     }
 
 

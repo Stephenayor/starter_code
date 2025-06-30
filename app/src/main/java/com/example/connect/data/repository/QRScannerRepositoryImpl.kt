@@ -2,7 +2,7 @@ package com.example.connect.data.repository
 
 import android.content.Context
 import android.util.Log
-import com.example.connect.data.UserModel
+import com.example.connect.data.model.UserModel
 import com.example.connect.domain.QRScannerRepository
 import com.example.connect.utils.ApiResponse
 import com.example.connect.utils.AppConstants.Companion.CONNECTUSERS

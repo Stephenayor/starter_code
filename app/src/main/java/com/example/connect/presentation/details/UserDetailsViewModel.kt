@@ -2,7 +2,7 @@ package com.example.connect.presentation.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.connect.data.UserModel
+import com.example.connect.data.model.UserModel
 import com.example.connect.domain.QRScannerRepository
 import com.example.connect.utils.ApiResponse
 import dagger.hilt.android.lifecycle.HiltViewModel

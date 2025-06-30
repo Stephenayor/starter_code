@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.connect.data.UserModel
+import com.example.connect.data.model.UserModel
 import com.example.connect.utils.ApiResponse
 import com.example.connect.utils.Route
 import com.example.connect.utils.Tools

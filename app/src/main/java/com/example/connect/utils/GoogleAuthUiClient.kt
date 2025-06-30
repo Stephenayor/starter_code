@@ -4,12 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import com.example.connect.R
-import com.example.connect.data.SignInResult
-import com.example.connect.data.UserData
+import com.example.connect.data.model.SignInResult
+import com.example.connect.data.model.UserData
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
 import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase

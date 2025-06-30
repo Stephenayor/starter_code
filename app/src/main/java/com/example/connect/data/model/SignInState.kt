@@ -1,4 +1,4 @@
-package com.example.connect.data
+package com.example.connect.data.model
 
 data class SignInState(
     val isSignInSuccessful: Boolean = false,
