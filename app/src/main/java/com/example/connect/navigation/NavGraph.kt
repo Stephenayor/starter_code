@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.connect.presentation.chats.ChatsScreen
+import com.example.connect.presentation.crypto.CryptoChartsScreen
 import com.example.connect.presentation.qrscanner.QRScannerHome
 import com.example.connect.presentation.details.UserDetailsScreen
 import com.example.connect.presentation.onboarding.LoginScreen
@@ -45,6 +46,9 @@ fun Navigation(modifier: Modifier = Modifier) {
         }
         composable(Route.CHATS_SCREEN) {
             ChatsScreen()
+        }
+        composable(Route.CRYPTO_SCREEN) {
+            CryptoChartsScreen()
         }
     }
 }

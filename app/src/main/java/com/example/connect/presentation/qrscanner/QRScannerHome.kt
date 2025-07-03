@@ -17,10 +17,13 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.ShowChart
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -168,7 +171,7 @@ fun QRScannerHome(
 @Composable
 fun BottomNavigationBarWithCenterChat(navController: NavController) {
     var selectedItem by remember { mutableIntStateOf(0) }
-    val items = listOf("Home", "Chat", "Scan")
+    val items = listOf("Home", "Charts", "Chat", "Scan")
 
     Box {
         NavigationBar(
@@ -179,30 +182,35 @@ fun BottomNavigationBarWithCenterChat(navController: NavController) {
                 .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
         ) {
             items.forEachIndexed { index, item ->
-                if (index == 1) {
-                    Spacer(modifier = Modifier.weight(1f))
+                if (index == 2) {
+                    Spacer(modifier = Modifier.weight(2f))
                 } else {
-                    val actualIndex = if (index == 0) 0 else 2
                     NavigationBarItem(
-                        selected = selectedItem == actualIndex,
+                        selected = selectedItem == index,
                         onClick = {
-                            selectedItem = actualIndex
+                            selectedItem = index
                             when (item) {
                                 "Home" -> navController.navigate(Route.QR_SCANNER)
+                                "Charts" -> navController.navigate(Route.CRYPTO_SCREEN)
                                 "Scan" -> navController.navigate(Route.SCAN_BARCODE)
                             }
                         },
                         icon = {
                             Icon(
-                                imageVector = if (item == "Home") Icons.Default.QrCodeScanner else Icons.Default.List,
+                                imageVector = when (item) {
+                                    "Home" -> Icons.Default.QrCodeScanner
+                                    "Charts" -> Icons.Default.ShowChart
+                                    "Scan" -> Icons.Default.List
+                                    else -> Icons.Default.Info
+                                },
                                 contentDescription = item,
-                                tint = if (selectedItem == actualIndex) MaterialTheme.colorScheme.primary else Color.Gray
+                                tint = if (selectedItem == index) MaterialTheme.colorScheme.primary else Color.Gray
                             )
                         },
                         label = {
                             Text(
                                 text = item,
-                                color = if (selectedItem == actualIndex) MaterialTheme.colorScheme.primary else Color.Gray
+                                color = if (selectedItem == index) MaterialTheme.colorScheme.primary else Color.Gray
                             )
                         }
                     )
@@ -212,7 +220,7 @@ fun BottomNavigationBarWithCenterChat(navController: NavController) {
 
         FloatingActionButton(
             onClick = {
-                selectedItem = 1
+                selectedItem = 2 // Chat index
                 navController.navigate(Route.CHATS_SCREEN)
             },
             shape = CircleShape,
@@ -231,10 +239,11 @@ fun BottomNavigationBarWithCenterChat(navController: NavController) {
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     var selectedItem by remember { mutableIntStateOf(0) }
-    val items = listOf("Home", "Scan")
+    val items = listOf("Home", "Charts", "Scan")
     val icons = listOf(
         rememberVectorPainter(image = Icons.Default.QrCodeScanner),
         rememberVectorPainter(image = Icons.Default.List),
+        rememberVectorPainter(image = Icons.Default.BarChart),
     )
 
     NavigationBar {

@@ -7,4 +7,5 @@ object Route {
     const val SIGN_IN = "LoginScreen"
     const val USER_DETAILS = "UserDetailsScreen"
     const val CHATS_SCREEN = "ChatScreen"
+    const val CRYPTO_SCREEN = "CryptoScreen"
 }
