@@ -30,6 +30,7 @@ mapsCompose = "6.5.2"
 mapsComposeUtils = "6.5.2"
 mapsComposeWidgets = "6.5.2"
 materialIconsCore = "1.5.1"
+mpandroidchart = "v3.1.0"
 navigationRuntimeKtx = "2.8.9"
 navigationCompose = "2.9.0"
 animationCoreLint = "1.8.0-alpha07"
@@ -114,6 +115,7 @@ maps-compose-widgets = { module = "com.google.maps.android:maps-compose-widgets"
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 play-services = { module = "com.google.android.gms:play-services", version.ref = "playServices" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
